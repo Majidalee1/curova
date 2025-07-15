@@ -252,45 +252,55 @@ nav {
 .hero-mockups {
     position: relative;
     width: 100%;
-    height: 500px;
+    height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: visible;
 }
 
 .mockup-device {
     position: absolute;
     border-radius: 25px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-out;
+    background: var(--white);
+    will-change: transform;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
 }
 
 .mockup-device:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px) translateZ(0);
 }
 
 .mockup-device img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    display: block;
+    border-radius: 20px;
 }
 
 .mockup-primary {
-    width: 300px;
-    height: 450px;
+    width: 280px;
+    height: 560px;
     z-index: 2;
     border: 4px solid var(--white);
+    left: 20px;
+    transform: rotate(-5deg);
 }
 
 .mockup-secondary {
-    width: 250px;
-    height: 375px;
+    width: 260px;
+    height: 520px;
     z-index: 1;
-    right: -80px;
-    top: 60px;
+    right: 20px;
+    top: 40px;
     border: 3px solid var(--white);
-    opacity: 0.9;
+    opacity: 0.95;
+    transform: rotate(8deg);
 }
 
 /* Features Section */
@@ -525,11 +535,11 @@ nav {
 
 /* App Download Section */
 .app-download {
-    padding: 100px 0;
-    background: linear-gradient(135deg, var(--primary-teal) 0%, #017a87 100%);
+    padding: 120px 0;
+    background: linear-gradient(135deg, var(--primary-teal) 0%, #017a87 50%, var(--primary-teal) 100%);
     color: var(--white);
-    text-align: center;
     position: relative;
+    overflow: hidden;
 }
 
 .app-download::before {
@@ -539,52 +549,152 @@ nav {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    background:
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
     pointer-events: none;
 }
 
-.app-download h2 {
-    font-size: 42px;
-    font-weight: 700;
-    margin-bottom: 25px;
-    position: relative;
-    z-index: 1;
+.app-download::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><defs><pattern id="hexagons" width="60" height="60" patternUnits="userSpaceOnUse"><polygon points="30,2 50,15 50,35 30,48 10,35 10,15" fill="none" stroke="white" stroke-width="1" opacity="0.05"/></pattern></defs><rect width="60" height="60" fill="url(%23hexagons)"/></svg>');
+    animation: float 20s ease-in-out infinite;
+    pointer-events: none;
 }
 
-.app-download p {
-    font-size: 20px;
-    margin-bottom: 50px;
-    opacity: 0.9;
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(120deg); }
+    66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+.app-download-container {
     position: relative;
     z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.app-download-content h2 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #ffffff 0%, #e0f7fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.app-download-content p {
+    font-size: 20px;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.download-stats {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.download-stat {
+    text-align: center;
+}
+
+.download-stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    background: linear-gradient(135deg, #ffffff 0%, #b2dfdb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.download-stat-label {
+    font-size: 14px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .download-buttons {
     display: flex;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 50px;
-    position: relative;
-    z-index: 1;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
-.download-btn {
-    background: var(--white);
-    color: var(--text-dark);
-    padding: 18px 35px;
+.download-badge {
+    display: block;
+    transition: all 0.3s ease;
     border-radius: 12px;
-    text-decoration: none;
-    font-weight: 600;
+    overflow: hidden;
+}
+
+.download-badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.store-badge {
+    height: 60px;
+    width: auto;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.store-badge:hover {
+    transform: scale(1.02);
+}
+
+.app-preview {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-preview-mockup {
+    width: 300px;
+    height: 600px;
+    border-radius: 40px;
+    padding: 10px;
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    animation: float-gentle 6s ease-in-out infinite;
     display: flex;
     align-items: center;
-    gap: 12px;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-md);
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
 }
 
-.download-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+.app-preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes float-gentle {
+    0%, 100% { transform: translateY(0px) translateZ(0); }
+    50% { transform: translateY(-10px) translateZ(0); }
 }
 
 /* Footer */
@@ -660,19 +770,22 @@ footer {
     }
 
     .hero-mockups {
-        height: 400px;
+        height: 500px;
     }
 
     .mockup-primary {
-        width: 250px;
-        height: 375px;
+        width: 220px;
+        height: 440px;
+        left: 10px;
+        transform: rotate(-3deg);
     }
 
     .mockup-secondary {
         width: 200px;
-        height: 300px;
-        right: -60px;
-        top: 50px;
+        height: 400px;
+        right: 10px;
+        top: 30px;
+        transform: rotate(5deg);
     }
 
     .section-title {
@@ -692,12 +805,27 @@ footer {
     }
 
     .download-buttons {
-        flex-direction: column;
+        justify-content: center;
         align-items: center;
     }
 
-    .app-download h2 {
-        font-size: 32px;
+    .app-download-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+
+    .app-download-content h2 {
+        font-size: 36px;
+    }
+
+    .download-stats {
+        justify-content: center;
+    }
+
+    .app-preview-mockup {
+        width: 250px;
+        height: 500px;
     }
 
     .hero-stats {
@@ -720,19 +848,22 @@ footer {
     }
 
     .hero-mockups {
-        height: 300px;
+        height: 400px;
     }
 
     .mockup-primary {
-        width: 200px;
-        height: 300px;
+        width: 180px;
+        height: 360px;
+        left: 5px;
+        transform: rotate(-2deg);
     }
 
     .mockup-secondary {
         width: 160px;
-        height: 240px;
-        right: -40px;
-        top: 30px;
+        height: 320px;
+        right: 5px;
+        top: 20px;
+        transform: rotate(3deg);
     }
 
     .partners-grid {
@@ -741,5 +872,28 @@ footer {
 
     .section-title {
         font-size: 28px;
+    }
+
+    .app-download-content h2 {
+        font-size: 28px;
+    }
+
+    .download-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .app-preview-mockup {
+        width: 200px;
+        height: 400px;
+    }
+
+    .store-badge {
+        height: 50px;
+    }
+
+    .download-buttons {
+        flex-direction: column;
+        gap: 15px;
     }
 }
